@@ -3,7 +3,8 @@
   :url "http://example.com/FIXME"
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/clojurescript "0.0-1896"]
-                 [ring "1.1.8"]]
+                 [ring "1.1.8"]
+                 [liberator "0.9.0"]]
   :plugins [[lein-cljsbuild "0.3.2"]
             [lein-ring "0.8.3"]]
   :hooks [leiningen.cljsbuild]
