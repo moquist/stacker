@@ -9,22 +9,17 @@ I'm learning to use datomic+clojure+clojurescript together. In a stack. The hist
 2. cd stacker
 3. lein deps
 4. lein run
-
-And then, in a separate terminal (henceforth "term2"):
-
+5. Switch to a separate terminal (henceforth "term2").
 6. cd stacker
 7. lein trampoline cljsbuild repl-listen
+8. Switch to your browser.
+9. http://localhost:4001/app
+10. Open up the javascript console.
+11. Switch back to your term2 (from above).
+12. (.log js/console "hi there")
 
-And then, in your browser:
-
-8. http://localhost:4001/app
-9. Open up the javascript console.
-
-And lastly, in term2:
-
-10. (.log js/console "hi there")
-
-Your console log entry should appear in ... your console log. You're brepling!
+Your console log entry should appear in ... your console log. You're bREPLing!
+(For more on using the bREPL, see https://github.com/magomimmo/modern-cljs/blob/master/doc/tutorial-02.md)
 
 ## License
 
