@@ -22,5 +22,6 @@
                    :pretty-print true}
         :jar true}}}
   :main stacker.server
+  :profiles {:dev {:plugins [[com.cemerick/austin "0.1.1"]]}}
   :ring {:handler stacker.server/app})
 
