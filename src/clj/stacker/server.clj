@@ -36,5 +36,5 @@
       (file-info/wrap-file-info)))
 
 (defn -main [& args]
-  (jetty/run-jetty #'app {:port 3000}))
+  (jetty/run-jetty #'app {:port 4001}))
 
