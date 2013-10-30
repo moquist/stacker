@@ -1,6 +1,6 @@
 (ns stacker.server
   (:require [ring.adapter.jetty :as jetty]
-            [ring.middleware.resource :as resources]
+            [ring.middleware.resource :as ring-resource]
             [ring.middleware.content-type :as content-type]
             [ring.middleware.file-info :as file-info]
             [ring.util.response :as response]
@@ -14,10 +14,6 @@
   :available-media-types ["text/html"]
   :handle-ok (fn [_] (:app templates/pages)))
 
-(defresource resource-yap
-  :available-media-types ["text/html"]
-  :handle-ok (fn [_] (:yap templates/pages)))
-
 (defresource resource-yapping
   :available-media-types ["application/json"]
   :handle-ok (fn [_] (println :resource-yapping)
@@ -27,12 +23,11 @@
 (defroutes app-routes
   (ANY "/" [] (fn [_] (response/redirect "/help.html")))
   (ANY "/app" [] resource-app)
-  (ANY "/yap" [] resource-yap)
   (ANY "/yapping" [] resource-yapping))
 
 (def app
   (-> app-routes
-      (resources/wrap-resource "public")
+      (ring-resource/wrap-resource "public")
       (file-info/wrap-file-info)))
 
 (defn -main [& args]
