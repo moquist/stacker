@@ -1,11 +1,10 @@
 (ns stacker.client
   (:require [clojure.browser.repl :as repl]
-            ;[goog.net.XhrIo :as xhrio]
-            [clojure.browser.net :as gnet]
-            [clojure.browser.event :as gevent]
+            [clojure.browser.net :as cb-net]
+            [clojure.browser.event :as cb-event]
             [dommy.core :as dommy])
   (:use-macros
-   [dommy.macros :only [sel1]]))
+   [dommy.macros :only [by-id sel1]]))
 
 (repl/connect "http://localhost:9000/repl")
 
@@ -19,17 +18,31 @@
 
 (def yapping-uri "http://localhost:4001/yapping")
 
-(defn call-api []
-  (let [xhr (gnet/xhr-connection.)]
-    (gevent/listen xhr :error callback-err)
-    (gevent/listen xhr :success callback-success)
-    (gnet/transmit xhr yapping-uri)))
+(def xhr (cb-net/xhr-connection.)) ; local state!
+(cb-event/listen xhr :error callback-err)
+(cb-event/listen xhr :success callback-success)
 
-(call-api)
+(defn fetch-updates []
+  (cb-net/transmit xhr yapping-uri))
 
 (defn handle-click []
-  (js/alert "Hello!"))
+  (js/alert "Hello!")
+  (fetch-updates))
 
-(def clickable (.getElementById js/document "clickable"))
-(.addEventListener clickable "click" handle-click)
+(defn poll
+  "Request new data every 10 seconds." 
+  []
+  (let [timer (goog.Timer. 10000)]
+    (do (fetch-updates)
+        (. timer (start))
+        (cb-event/listen timer goog.Timer/TICK fetch-updates))))
+
+(defn start-app
+  "Start polling and listen for UI events."
+  []
+  (do (poll)
+      (cb-event/listen (by-id :clickable) "click" handle-click)))
+
+(start-app)
+
 
