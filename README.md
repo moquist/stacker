@@ -12,6 +12,7 @@ I'm learning to use datomic+clojure+clojurescript together. In a stack. The hist
 5. Switch to a separate terminal (henceforth "term2").
 6. cd stacker
 7. lein trampoline cljsbuild repl-listen
+ * Highly recommended -- use rlwrap for readline features in your bREPL: rlwrap lein trampoline cljsbuild repl-listen
 8. Switch to your browser.
 9. http://localhost:4001/app
 10. Open up the javascript console.
